@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="contact-style.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Externe CSS-Datei für Styles -->
+    <style>
+        /* Fixierte Navbar */
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 1rem;
+
+        }
+
+        /* Anpassung des Body-Inhalts, um die fixe Navbar zu berücksichtigen */
+        body {
+            margin: 0;
+            padding-top: 100px; /* Platz für die Navbar schaffen */
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8c8c8; /* Gleicher Hintergrund wie der Rest */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Navbar aus externer Datei -->
+    <div id="navbar"></div>
+
+    <section>
+        <div class="container">
+            <div class="contactInfo">
+                <h2>Contact Info</h2>
+                <ul class="info">
+                    <li>
+                        <span><img src="img/location.png" alt=""></span>
+                        <span>8 Sutherland Street<br>Melbourne, Victoria<br>3000</span>
+                    </li>
+                    <li>
+                        <span><img src="img/mail.png" alt=""></span>
+                        <span>desmondjeon@gmail.com</span>
+                    </li>
+                    <li>
+                        <span><img src="img/call.png" alt=""></span>
+                        <span>0481-111-111</span>
+                    </li>
+                </ul>
+                <ul class="socialIcon">
+                    <li><a href="#"><img src="img/1.png" alt=""></a></li>
+                    <li><a href="#"><img src="img/2.png" alt=""></a></li>
+                    <li><a href="#"><img src="img/3.png" alt=""></a></li>
+                    <li><a href="#"><img src="img/4.png" alt=""></a></li>
+                    <li><a href="#"><img src="img/5.png" alt=""></a></li>
+                </ul>
+            </div>
+
+            <div class="contactForm">
+                <h2>Send a Message</h2>
+                <div class="formBox">
+                    <div class="inputBox w50">
+                        <input type="text" name="first_name" required>
+                        <span>First Name</span>
+                    </div>
+                    <div class="inputBox w50">
+                        <input type="text" name="last_name" required>
+                        <span>Last Name</span>
+                    </div>
+                    <div class="inputBox w50">
+                        <input type="email" name="email" required>
+                        <span>Email</span>
+                    </div>
+                    <div class="inputBox w50">
+                        <input type="text" name="phone" required>
+                        <span>Mobile Number</span>
+                    </div>
+                    <div class="inputBox w100">
+                        <textarea name="message" required></textarea>
+                        <span>Write Your Message Here.</span>
+                    </div>
+                    <div class="inputBox w100">
+                        <textarea name="message1" required></textarea>
+                        <span>Write Your Message Here.</span>
+                    </div>
+                    <div class="inputBox w100">
+                        <textarea name="message1" required></textarea>
+                        <span>Write Your Message Here.</span>
+                    </div>
+                    <div class="inputBox w100">
+                        <textarea name="message1" required></textarea>
+                        <span>Write Your Message Here.</span>
+                    </div>
+                    <div class="inputBox w100">
+                        <textarea name="message1" required></textarea>
+                        <span>Write Your Message Here.</span>
+                    </div>
+                                       
+                    <div class="inputBox w100">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Lade die Navbar aus der externen HTML-Datei
+        async function loadNavbar() {
+            const response = await fetch('navbar.html');
+            const navbarHtml = await response.text();
+            document.getElementById('navbar').innerHTML = navbarHtml;
+
+            // Setze die Event-Listener für die Sprachumschaltung nach dem Laden des Navbar-HTMLs
+            document.querySelectorAll('.language-switcher a').forEach(langSwitcher => {
+                langSwitcher.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const selectedLang = this.getAttribute('data-lang');
+                    setLanguage(selectedLang);
+                    loadTranslations(selectedLang);
+                });
+            });
+
+            // Initialisiere die Sprache
+            const storedLang = localStorage.getItem('preferredLanguage') || 'rus';
+            setLanguage(storedLang);
+            loadTranslations(storedLang);
+        }
+
+        // Sprache speichern und als aktiv markieren
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.querySelectorAll('.language-switcher a').forEach(a => a.classList.remove('active'));
+            const activeLink = document.querySelector(`.language-switcher a[data-lang="${lang}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Übersetzungen laden und anwenden
+        async function loadTranslations(lang) {
+            try {
+                const response = await fetch(`translations/translations_${lang}.json`);
+                const translations = await response.json();
+                const elementsToTranslate = ["logo", "menu1", "submenu1_1", "submenu1_2", "submenu1_3", "menu2", "menu3", "menu4"];
+
+                elementsToTranslate.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        if (element.querySelector('i')) {
+                            element.childNodes[0].nodeValue = translations[id] + " ";
+                        } else {
+                            element.innerText = translations[id];
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Error loading translations: ", error);
+            }
+        }
+
+        // Navbar laden, wenn die Seite geladen wird
+        loadNavbar();
+    </script>
+</body>
+</html>

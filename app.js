@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8000;
 
 //statische Dateien bereitstellen
 app.use(express.static('public'));
@@ -11,6 +11,6 @@ app.get('/', (req, res) => {
 });
 
 // Server starten
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server running at http://localhost:${port}`);
 });
