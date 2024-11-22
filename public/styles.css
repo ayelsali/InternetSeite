@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -17,7 +19,7 @@ body {
     margin-right: 2rem;
 }
 .navbar .logo {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #333;
     margin-right: 6rem;
@@ -50,7 +52,7 @@ body {
     font-weight: 500;
     font-family: 'Poppins', sans-serif; /* Einheitliche Schriftart */
     font-weight: 500;
-    font-size: 1rem; /* Einheitliche Schriftgröße */
+    font-size: 1.2rem; /* Einheitliche Schriftgröße */
 }
 .navbar .menu-item .submenu {
     display: none;
@@ -85,7 +87,7 @@ body {
 }
 .navbar .cta {
     margin-left: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
     background-color: #007bff;
     color: #ffffff;
     text-decoration: none;
